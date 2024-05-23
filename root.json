@@ -53,6 +53,7 @@
     "Pi-Hole": "pi-hole.json",
     "Plex": "plex.json",
     "PocketMine": "pocketmine.json",
+    "Portainer CE": "portainer-ce.json",
     "qBittorrent": "qbittorrent_lsio.json",
     "Radarr": "radarr.json",
     "Resilio Sync": "resilioSync.json",

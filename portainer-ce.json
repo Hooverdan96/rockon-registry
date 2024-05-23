@@ -1,0 +1,35 @@
+{
+  "Portainer-ce": {
+    "website": "https://www.portainer.io/",
+    "version": "1.1",
+    "description": "<strong>Advanced Users Only!</strong> Use at your own risk.<p>Portainer CE (Community Edition) is a light weight advanced management UI which allows you to easily manage your Docker host or Swarm cluster.</p><p>Based on the official Portainer docker image: <a href='https://docs.portainer.io/' target='blank'>https://docs.portainer.io/</a>, available for amd64 and arm64 architecture.</p>",
+    "more_info": "<h4>Documentation</h4><p>Please refer to Portainer's documentation for details on its functions: <a href='https://portainer.readthedocs.io/en/stable/' target='_blank'>https://portainer.readthedocs.io/en/stable/</a><h4>Important points for proper function with Rockstor</h4><p>Portainer includes a lot of features and brings new possiblities to manage your docker environment. Nevertheless, please note that it is running alonside Rockstor, meaning that some conflicts might arise. For instance, it is important to note that all volumes automatically created and managed by Portainer will reside inside the Rocstor share designed as the Rock-ons service's root. It is thus recommended to create shares from Rockstor's webUI first, and then mount them as volume when creating a new container from within Portainer.</p>",
+    "containers": {
+      "portainer-ce": {
+        "image": "portainer/portainer-ce",
+        "launch_order": 1,
+        "opts": [
+          [
+            "-v",
+            "/var/run/docker.sock:/var/run/docker.sock"
+          ]
+        ],
+        "ports": {
+          "9000": {
+            "description": "Portainer WebUI http port. Suggested default: 9000",
+            "host_default": 9000,
+            "label": "WebUI port",
+            "protocol": "tcp",
+            "ui": true
+          }
+        },
+        "volumes": {
+          "/data": {
+            "description": "Data share for Portainer information. Share should be associated with root user/privileges, as the container runs as root",
+            "label": "Data Storage"
+          }
+        }
+      }
+    }
+  }
+}

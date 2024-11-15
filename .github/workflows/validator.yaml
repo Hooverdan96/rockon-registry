@@ -9,7 +9,7 @@ jobs:
     name: runner / suggester / validator
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: go install github.com/rockstor/rockon-validator@latest
       - run: rockon-validator -w .
       - uses: reviewdog/action-suggester@v1

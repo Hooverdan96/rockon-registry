@@ -12,13 +12,10 @@ jobs:
       GOPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      # - uses: actions/checkout@v4
-      # - run: go install -v -n -a github.com/rockstor/rockon-validator@latest
-      # - run: rockon-validator -w .
-      # - uses: reviewdog/action-suggester@v1
-      #   with:
-      #     tool_name: rockon-validator
-      #     filter_mode: nofilter
-      #     fail_on_error: true
+      - run: go install -v -n -a github.com/rockstor/rockon-validator@latest
+      - run: rockon-validator -w .
+      - uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: rockon-validator
+          filter_mode: nofilter
+          fail_on_error: true

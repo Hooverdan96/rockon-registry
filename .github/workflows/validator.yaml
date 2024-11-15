@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: go install github.com/rockstor/rockon-validator@latest
+      - rum: export PATH=$PATH:/home/$USER/go/bin
       - run: rockon-validator -w .
       - uses: reviewdog/action-suggester@v1
         with:

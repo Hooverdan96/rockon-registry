@@ -8,10 +8,11 @@ jobs:
   validate:
     name: runner / suggester / validator
     runs-on: ubuntu-latest
+    env:
+      GOPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - run: go install -v -n -a github.com/rockstor/rockon-validator@latest
-      - run: export PATH=$PATH:/home/$USER/go/bin
       - run: rockon-validator -w .
       - uses: reviewdog/action-suggester@v1
         with:

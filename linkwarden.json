@@ -1,21 +1,42 @@
 {
     "Linkwarden": {
         "description": "<p>Linkwarden is a self-hosted, open-source collaborative bookmark manager for organizing and archiving webpages.</p><p>Based on the official image from <a href='https://github.com/linkwarden/linkwarden' target='_blank'>Linkwarden</a>, available for amd64 and arm64 architecture.</p>",
-        "version": "0.9",
+        "version": "0.x",
         "website": "https://linkwarden.app/",
+        "rock_vars": {
+            "LW_PORT": {
+                "description": "The port for accessing the Linkwarden Web UI.",
+                "label": "Web UI Port",
+                "default": "3000",
+                "hidden":false,
+                "ui": true
+            },
+            "PG_PASS": {
+                "description": "Enter the password for the PostgreSQL 'postgres' super-user",
+                "label": "PostgreSQL Password",
+                "default": "",
+                "hidden": false
+            },
+        },
         "containers": {
             "linkwarden": {
                 "image": "ghcr.io/linkwarden/linkwarden",
                 "tag": "latest",
                 "launch_order": 2,
-                "ports": {
-                    "3000": {
-                        "description": "The port for accessing the Linkwarden Web UI.",
-                        "label": "Web UI Port",
-                        "host_default": 3000,
-                        "ui": true
-                    }
-                },
+                "opts": [
+                    [
+                        "-p",
+                        "$LW_PORT"
+                    ],
+                    [
+                        "-e",
+                        "DATABASE_URL=postgresql://postgres:$PG_PASS@linkwarden-postgres:5432/linkwarden"
+                    ],
+                    [
+                        "-e",
+                        "NEXTAUTH_URL=http://$HOST:$LW_PORT/api/v1/auth"
+                    ]
+                ],
                 "volumes": {
                     "/data/data": {
                         "description": "Choose a Share for Linkwarden data storage. E.g., create a share named linkwarden-data.",
@@ -23,19 +44,9 @@
                     }
                 },
                 "environment": {
-                    "DATABASE_URL": {
-                        "description": "PostgreSQL connection string. Set to postgresql://postgres:<password>@linkwarden-postgres:5432/linkwarden",
-                        "label": "PostgreSQL URL",
-                        "index": 3
-                    },
                     "NEXTAUTH_SECRET": {
-                        "description": "A secure secret phrase.",
-                        "label": "NextAuth Secret",
-                        "index": 2
-                    },
-                    "NEXTAUTH_URL": {
-                        "description": "Base URL for Linkwarden. Set to: http://localhost:<Web UI port defined earlier>/api/v1/auth",
-                        "label": "NextAuth URL.",
+                        "description": "Set an alphanumeric secret phrase for Linkwarden's authentication mechanism. This is not a user password but internal to Linkwarden.",
+                        "label": "Linkwarden Secret",
                         "index": 1
                     }
                 }
@@ -44,18 +55,18 @@
                 "image": "postgres",
                 "tag": "17-alpine",
                 "launch_order": 1,
+                "opts": [
+                    [
+                        "-e",
+                        "POSTGRES_PASSWORD=$PG_PASS"
+                    ]
+                ],                
                 "volumes": {
                     "/var/lib/postgresql/data": {
                         "description": "Choose a Share for PostgreSQL database storage.",
                         "label": "PostgreSQL Storage"
                     }
                 },
-                "environment": {
-                    "POSTGRES_PASSWORD": {
-                        "description": "Enter the password for the PostgreSQL 'postgres' super-user that was entered previously as part of the 'PostgreSQL URL'",
-                        "label": "PostgreSQL Password"
-                    }
-                }
             }
         },
         "container_links": {

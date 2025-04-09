@@ -1,5 +1,12 @@
 {
     "Ghost": {
+        "description": "ghost: A publishing platform for professional bloggers.<p>Based on the official docker image: <a href='https://hub.docker.com/_/ghost' target='_blank'>https://hub.docker.com/_/ghost</a>, available for amd64 and arm64 architecture.</p>",
+        "version": "1.1",
+        "website": "https://ghost.org",
+        "more_info": "navigate to the ui link for the admin site or go to the base url for the public facing site",
+        "ui": {
+            "slug": "ghost"
+        },
         "containers": {
             "ghost": {
                 "image": "ghost",
@@ -7,9 +14,9 @@
                 "ports": {
                     "2368": {
                         "description": "Port for website",
+                        "label": "Ghost Port",
                         "host_default": 8081,
                         "protocol": "tcp",
-                        "label": "Ghost Port",
                         "ui": true
                     }
                 },
@@ -17,18 +24,10 @@
                     "/var/lib/ghost/content": {
                         "description": "Choose a share for your blog data.",
                         "label": "Blog Storage",
-                        "min_size": "1073741824"
+                        "min_size": 1073741824
                     }
                 }
             }
-        },
-        "description": "ghost: A publishing platform for professional bloggers.<p>Based on the official docker image: <a href='https://hub.docker.com/_/ghost' target='_blank'>https://hub.docker.com/_/ghost</a>, available for amd64 and arm64 architecture.</p>",
-        "volume_add_support": false,
-        "more_info": "navigate to the ui link for the admin site or go to the base url for the public facing site",
-        "ui": {
-            "slug": "ghost"
-        },
-        "version": "1.1",
-        "website": "https://ghost.org"
+        }
     }
 }

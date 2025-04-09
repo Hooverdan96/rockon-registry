@@ -1,20 +1,18 @@
 {
     "Sonarr": {
+        "description": "Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users.<p>Based on a custom docker image: <a href='https://hub.docker.com/r/linuxserver/sonarr' target='_blank'>https://hub.docker.com/r/linuxserver/sonarr</a>, available for amd64 and arm64 architecture.</p>",
+        "version": "1.1",
+        "website": "https://sonarr.tv/",
+        "volume_add_support": true,
         "containers": {
             "Sonarr": {
                 "image": "linuxserver/sonarr",
                 "launch_order": 1,
-		"opts": [
-		    [
-			"-v",
-			"/dev/rtc:/dev/rtc:ro"
-		    ]
-		],
                 "ports": {
                     "8989": {
                         "description": "Sonarr WebUI port. Suggested default: 8989",
-                        "host_default": 8989,
                         "label": "WebUI port",
+                        "host_default": 8989,
                         "protocol": "tcp",
                         "ui": true
                     }
@@ -24,35 +22,34 @@
                         "description": "Choose a Share for Sonarr configuration. Eg: create a Share called sonarr-config for this purpose alone.",
                         "label": "Config Storage"
                     },
+                    "/downloads": {
+                        "description": "Choose a Share for Sonarr downloads. Eg: create a Share called Sonarr-downloads for this purpose alone.",
+                        "label": "Download Storage"
+                    },
                     "/tv": {
                         "description": "Choose a Share for Sonarr media library Eg: create a Share called Sonarr-library for this purpose alone. You can also assign other media Shares on the system after installation.",
                         "label": "Media Library"
-                    },
-		    "/downloads": {
-			"description": "Choose a Share for Sonarr downloads. Eg: create a Share called Sonarr-downloads for this purpose alone.",
-			"label": "Download Storage"
                     }
                 },
+                "opts": [
+                    [
+                        "-v",
+                        "/dev/rtc:/dev/rtc:ro"
+                    ]
+                ],
                 "environment": {
-                    "PUID": {
-		        "description": "Enter a valid UID to run Sonarr as. It must have full permissions to all Shares mapped in the previous step.",
-                        "label": "UID to run Sonarr as.",
-                        "index": 1
-		    },
                     "PGID": {
                         "description": "Enter a valid GID to use along with the above UID. It(or the above UID) must have full permissions to all Shares mapped in the previous step.",
                         "label": "GID to run Sonarr as.",
                         "index": 2
+                    },
+                    "PUID": {
+                        "description": "Enter a valid UID to run Sonarr as. It must have full permissions to all Shares mapped in the previous step.",
+                        "label": "UID to run Sonarr as.",
+                        "index": 1
                     }
                 }
             }
-        },
-        "description": "Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users.<p>Based on a custom docker image: <a href='https://hub.docker.com/r/linuxserver/sonarr' target='_blank'>https://hub.docker.com/r/linuxserver/sonarr</a>, available for amd64 and arm64 architecture.</p>",
-        "ui": {
-            "slug": ""
-        },
-        "volume_add_support": true,
-	"website": "https://sonarr.tv/",
-	"version": "1.1"
+        }
     }
 }

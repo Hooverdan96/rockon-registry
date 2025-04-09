@@ -1,12 +1,9 @@
 {
     "Transmission": {
         "description": "Open Source BitTorrent client.<p>Based on a custom docker image: <a href='https://hub.docker.com/r/dperson/transmission' target='_blank'>https://hub.docker.com/r/dperson/transmission</a>, available for amd64 and arm64 architecture.</p>",
-        "volume_add_support": true,
-        "ui": {
-            "slug": ""
-        },
         "version": "1.1",
         "website": "http://www.transmissionbt.com/",
+        "volume_add_support": true,
         "containers": {
             "transmission": {
                 "image": "dperson/transmission",
@@ -14,13 +11,13 @@
                 "ports": {
                     "51413": {
                         "description": "Port used to share the file being downloaded. You may need to open it (protocol: tcp and udp) on your firewall. Suggested default: 51413.",
-                        "host_default": 51413,
-                        "label": "Sharing port"
+                        "label": "Sharing port",
+                        "host_default": 51413
                     },
                     "9091": {
                         "description": "Transmission WebUI port. Suggested default: 9091",
-                        "host_default": 9091,
                         "label": "WebUI port",
+                        "host_default": 9091,
                         "protocol": "tcp",
                         "ui": true
                     }
@@ -32,26 +29,26 @@
                     }
                 },
                 "environment": {
+                    "GROUPID": {
+                        "description": "Choose a GID to run transmission as.",
+                        "label": "GID",
+                        "index": 4
+                    },
+                    "TRPASSWD": {
+                        "description": "Choose a login password for the Transmission WebUI.",
+                        "label": "WebUI password",
+                        "index": 2,
+                        "default": "admin"
+                    },
                     "TRUSER": {
                         "description": "Choose a login username for Transmission WebUI.",
                         "label": "WebUI username",
                         "index": 1
                     },
-                    "TRPASSWD": {
-                        "description": "Choose a login password for the Transmission WebUI.",
-                        "label": "WebUI password",
-                        "default": "admin",
-                        "index": 2
-		    },
-		    "USERID": {
-			"description": "Choose a UID to run transmission as.",
-			"label": "UID",
-			"index": 3
-		    },
-		    "GROUPID": {
-			"description": "Choose a GID to run transmission as.",
-			"label": "GID",
-			"index": 4
+                    "USERID": {
+                        "description": "Choose a UID to run transmission as.",
+                        "label": "UID",
+                        "index": 3
                     }
                 }
             }

@@ -1,5 +1,9 @@
 {
     "sabnzb": {
+        "description": "The best free and easy binary newsreader. <p>Based on a custom docker image: <a href='https://hub.docker.com/r/linuxserver/sabnzbd' target='_blank'>https://hub.docker.com/r/linuxserver/sabnzbd</a>, available for amd64 and arm64 architecture.</p>",
+        "version": "1.1",
+        "website": "http://sabnzbd.org/",
+        "volume_add_support": true,
         "containers": {
             "sabnzb": {
                 "image": "linuxserver/sabnzbd",
@@ -7,17 +11,17 @@
                 "ports": {
                     "8080": {
                         "description": "sabnzbget WebUI port. Suggested default: 8080",
-                        "host_default": 8080,
                         "label": "WebUI port",
+                        "host_default": 8080,
                         "protocol": "tcp",
                         "ui": true
                     },
-		    "9090": {
-			"description": "sabnzbget HTTPS WebUI port. Suggested default: 9090",
-			"host_default": 9090,
-			"label": "HTTPS WebUI port",
-			"protocol": "tcp"
-		    }
+                    "9090": {
+                        "description": "sabnzbget HTTPS WebUI port. Suggested default: 9090",
+                        "label": "HTTPS WebUI port",
+                        "host_default": 9090,
+                        "protocol": "tcp"
+                    }
                 },
                 "volumes": {
                     "/config": {
@@ -30,25 +34,18 @@
                     }
                 },
                 "environment": {
-                    "PUID": {
-		        "description": "Enter a valid UID to run sabnzbget as. It must have full permissions to all Shares mapped in the previous step.",
-                        "label": "UID to run sabnzbget as.",
-                        "index": 1
-		    },
                     "PGID": {
                         "description": "Enter a valid GID to use along with the above UID. It(or the above UID) must have full permissions to all Shares mapped in the previous step.",
                         "label": "GID to run sabnzbget as.",
                         "index": 2
+                    },
+                    "PUID": {
+                        "description": "Enter a valid UID to run sabnzbget as. It must have full permissions to all Shares mapped in the previous step.",
+                        "label": "UID to run sabnzbget as.",
+                        "index": 1
                     }
                 }
             }
-        },
-        "description": "The best free and easy binary newsreader. <p>Based on a custom docker image: <a href='https://hub.docker.com/r/linuxserver/sabnzbd' target='_blank'>https://hub.docker.com/r/linuxserver/sabnzbd</a>, available for amd64 and arm64 architecture.</p>",
-        "ui": {
-            "slug": ""
-        },
-        "volume_add_support": true,
-        "website": "http://sabnzbd.org/",
-	"version": "1.1"
+        }
     }
 }

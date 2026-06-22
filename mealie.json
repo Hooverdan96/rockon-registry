@@ -1,0 +1,105 @@
+{
+  "Mealie": {
+    "description": "Mealie is a self-hosted recipe manager and meal planner with a REST API backend and a reactive frontend application built in Vue for a pleasant user experience for the whole family.</p><p>Based on the <a href='https://github.com/mealie-recipes/mealie/pkgs/container/mealie' target='_blank'>official OCI image</a>, available for amd64 and arm64 architecture.</p>",
+    "version": "1.0",
+    "website": "https://mealie.io/",
+    "ui": {
+      "slug": ""
+    },
+    "containers": {
+      "mealie-db": {
+        "image": "postgres",
+        "tag": "17",
+        "launch_order": 1,
+        "volumes": {
+          "/var/lib/postgresql/data": {
+            "description": "Database storage for Mealie (Postgres).",
+            "label": "Database storage [e.g. mealie-pgdata]"
+          }
+        },
+        "environment": {
+          "POSTGRES_USER": {
+            "description": "Set the username for the postgres user.",
+            "label": "Postgres user [e.g. mealie]"
+          },
+          "POSTGRES_PASSWORD": {
+            "description": "Set the password for the postgres user.",
+            "label": "Postgres password [e.g. mealie]"
+          },
+          "POSTGRES_DB": {
+            "description": "Set the database name.",
+            "label": "Database name [e.g. mealie]"
+          }
+        }
+      },
+      "mealie-app": {
+        "image": "ghcr.io/mealie-recipes/mealie",
+        "tag": "latest",
+        "launch_order": 2,
+        "ports": {
+          "9000": {
+            "description": "Mealie Web Interface port.",
+            "label": "WebUI port [e.g. 9925]",
+            "host_default": 9925,
+            "protocol": "tcp",
+            "ui": true
+          }
+        },
+        "volumes": {
+          "/app/data/": {
+            "description": "Data storage for Mealie application.",
+            "label": "Mealie data [e.g. mealie-data]"
+          }
+        },
+        "opts": [
+          [
+            "-e",
+            "DB_ENGINE=postgres"
+          ],
+          [
+            "-e",
+            "POSTGRES_SERVER=mealie-db"
+          ],
+          [
+            "-e",
+            "POSTGRES_PORT=5432"
+          ]
+        ],
+        "environment": {
+          "ALLOW_SIGNUP": {
+            "description": "Allow new user registrations.",
+            "label": "Allow signup [e.g. false]"
+          },
+          "PUID": {
+            "description": "User ID to run the container as.",
+            "label": "PUID [e.g. 1000]"
+          },
+          "PGID": {
+            "description": "Group ID to run the container as.",
+            "label": "PGID [e.g. 1000]"
+          },
+          "POSTGRES_USER": {
+            "description": "Must match the database username set in mealie-db.",
+            "label": "Postgres user [e.g. mealie]"
+          },
+          "POSTGRES_PASSWORD": {
+            "description": "Must match the database password set in mealie-db.",
+            "label": "Postgres password [e.g. mealie]"
+          },
+          "POSTGRES_DB": {
+            "description": "Must match the database name set in mealie-db.",
+            "label": "Database name [e.g. mealie]"
+          }
+        }
+      }
+    },
+    "container_links": {
+      "mealie-app": [
+        {
+          "name": "MealieAppToDB",
+          "source_container": "mealie-db"
+        }
+      ]
+    }
+  }
+}
